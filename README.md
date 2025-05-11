@@ -1,20 +1,20 @@
 # docker_prueba
 # Smashing Pumpkins
 
-[![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
-[![Flask](https://img.shields.io/badge/Framework-Flask-green.svg)](https://flask.palletsprojects.com/)
-
-Sitio web fanático de The Smashing Pumpkins implementado con Flask y Docker.
+Sitio web sobre The Smashing Pumpkins implementado con Flask y Docker.
 
 ## 🚀 Despliegue Rápido
 
 ### Requisitos
 - Docker instalado
-- Git (opcional)
+- Git 
 
 ### Instalación
 ```bash
-git clone https://github.com/tuusuario/smashing-pumpkins-fan-site.git
-cd smashing-pumpkins-fan-site
-docker build -t pumpkins-site .
+git clone https://github.com/Alex-sklx0/docker_prueba.git
+cd docker_prueba
+docker build . -t pumpkins-web 
 docker run -d -p 80:5000 --name pumpkins_app pumpkins-site
+
+###Abrir la pagina
+En un navegador escribir la ip del host y disfrutar la pagina
