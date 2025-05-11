@@ -5,5 +5,7 @@ RUN apt install python3-pip -y
 RUN pip3 install flask
 WORKDIR /app
 COPY * ./
+ENV FLASK_APP=main.py
+ENV FLASK_ENV=development
 EXPOSE 5000
 CMD ["python3.10","main.py"]
