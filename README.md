@@ -24,11 +24,11 @@ cd docker_prueba
 
 ### 2. Construir la imagen Docker
 ```bash
-docker build -t pumpkins-site:prod .
+docker build . -t pumpkins-site:web
 ```
 #### 3. Ejecutar el contenedor 
 ```bash
-docker run -d -p 80:5000 pumpkins-site
+docker run -d -p 80:5000 pumpkins-site:web 
 ```
 ### 4. Verificar el estado
 ```bash
@@ -40,7 +40,7 @@ Cambios que se pueden hacer:
 ### Puertos Alternativos
 Para usar un puerto diferente al 80:
 ```bash
-docker run -d -p 8080:5000 pumpkins-site:prod
+docker run -d -p 8080:5000 pumpkins-site:web
 ```
 Para cambiar el puerto que se abre en el contenedor: (dentro del directorio clonado del github)
 ```bash
@@ -72,10 +72,10 @@ docker rm pumpkins_prod            # Eliminar el contenedor
 ```
 
 ```bash
-docker build . -t pumpkins-site:prod   # Reconstruir imagen
+docker build . -t pumpkins-site:web   # Reconstruir imagen
 ```
 
 Ejecutar de nuevo el contenedor:
 ```bash
-docker run -d -p 80:5000 pumpkins-site
+docker run -d -p 80:5000 pumpkins-site:web 
 ```
