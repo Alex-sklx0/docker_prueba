@@ -5,7 +5,7 @@ RUN apt update
 RUN apt install python3.10 -y
 RUN apt install python3-pip -y
 RUN pip3 install flask
-#crear un directorio llamado app
+#establece el directorio de trabajo
 WORKDIR /app
 #copiar todos los archivos de esta carpeta a la carpeta app/ en el contenedor
 COPY * ./
