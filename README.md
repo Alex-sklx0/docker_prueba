@@ -28,12 +28,11 @@ docker build -t pumpkins-site:prod .
 ```
 #### 3. Ejecutar el contenedor 
 ```bash
-docker run -d -p 80:5000 --name pumpkins_app pumpkins-site
+docker run -d -p 80:5000 pumpkins-site
 ```
 ### 4. Verificar el estado
 ```bash
 docker ps
-docker logs pumpkins_prod
 ```
 
 # Configuración
@@ -78,5 +77,5 @@ docker build . -t pumpkins-site:prod   # Reconstruir imagen
 
 Ejecutar de nuevo el contenedor:
 ```bash
-docker run -d -p 80:5000 --name pumpkins_app pumpkins-site
+docker run -d -p 80:5000 pumpkins-site
 ```

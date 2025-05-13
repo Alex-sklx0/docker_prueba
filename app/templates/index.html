@@ -3,83 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ band.name }} Fan Site</title>
+    <title>{{ band.name }} | Official Fan Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            margin: 0;
-            padding: 0;
-            background-image: url('static/images/pumpkins-bg.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: rgba(18, 18, 18, 0.85);
-            min-height: 100vh;
-        }
-        h1 {
-            font-family: 'Special Elite', cursive;
-            color: #ff5555;
-            text-align: center;
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px #000;
-        }
-        .album-card {
-            background: #1e1e1e;
-            padding: 1.5rem;
-            margin: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
-        }
-        .album-card:hover {
-            transform: translateY(-5px);
-        }
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 1rem;
-            border-top: 1px solid #333;
-        }
+    /* Variables de color */
+:root {
+    --primary: #ff5555;
+    --secondary: #6a1b9a;
+    --dark: #121212;
+    --light: #e0e0e0;
+    --gray: #333;
+}
+
+/* Estilos base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--dark);
+    color: var(--light);
+    line-height: 1.6;
+    background-image: url('../images/pumpkins-bg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Header y navegación */
+header {
+    background-color: rgba(18, 18, 18, 0.9);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Special Elite', cursive;
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    color: var(--light);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary);
+}
+
+.nav-links i {
+    margin-right: 0.5rem;
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.hero h1 {
+    font-family: 'Special Elite', cursive;
+    color: var(--primary);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--light);
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+/* Cards */
+.card {
+    background: rgba(30, 30, 30, 0.8);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+/* Grids */
+.facts-grid, .members-grid, .albums-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(18, 18, 18, 0.9);
+    margin-top: 3rem;
+}
+
+.social-links {
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    color: var(--light);
+    margin: 0 1rem;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--primary);
+}
+
+/* Album spotlight */
+.album-spotlight {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.album-spotlight img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.track-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.track-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .album-spotlight {
+        flex-direction: column;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    .nav-links {
+        margin-top: 1rem;
+    }
+
+    .nav-links li {
+        margin: 0 0.5rem;
+    }
+}
     </style>
-</head>
+    </head>
 <body>
-    <div class="container">
+    <header>
+        <nav>
+            <div class="logo">{{ band.name }}</div>
+            <ul class="nav-links">
+                <li><a href="/" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/discography"><i class="fas fa-compact-disc"></i> Discography</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
         <h1>{{ band.name }}</h1>
-        
-        <h2>About the Band</h2>
-        <p>Formed in {{ band.year_formed }} • Genres: {{ ", ".join(band.genres) }}</p>
-        
-        <h2>Members</h2>
-        <div class="members-grid">
-            {% for member in band.members %}
-            <div class="album-card">
-                <h3>{{ member.name }}</h3>
-                <p>{{ member.role }}</p>
-            </div>
-            {% endfor %}
-        </div>
-        
-        <h2>Discography Highlights</h2>
-        <div class="albums-grid">
-            {% for album in band.albums %}
-            <div class="album-card">
-                <h3>{{ album.name }}</h3>
-                <p>{{ album.year }}</p>
-            </div>
-            {% endfor %}
-        </div>
-        
-        <footer>
-            <p>© {{ current_year }} {{ band.name }} Fan Site | Not affiliated with the band</p>
-        </footer>
+        <p class="subtitle">Since {{ band.year_formed }} • {{ band.hometown }}</p>
     </div>
+
+    <main class="container">
+        <section class="quick-facts">
+            <h2><i class="fas fa-star"></i> Did You Know?</h2>
+            <div class="facts-grid">
+                {% for fact in band.fun_facts %}
+                <div class="fact-card">
+                    <p>{{ fact }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="featured-album">
+            <h2><i class="fas fa-fire"></i> Featured Album</h2>
+            <div class="album-spotlight">
+                <img src="{{ url_for('static', filename='images/albums/' + band.albums[1].cover) }}"
+                     alt="{{ band.albums[1].name }}">
+                <div class="album-info">
+                    <h3>{{ band.albums[1].name }} ({{ band.albums[1].year }})</h3>
+                    <ul class="track-list">
+                        {% for track in band.albums[1].highlights %}
+                        <li>{{ track }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-spotify"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ band.name }} Fan Site | Not affiliated with the band</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
