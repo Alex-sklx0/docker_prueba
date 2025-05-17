@@ -20,26 +20,26 @@ band_info = {
             "name": "Billy Corgan",
             "role": "Vocals, Guitar",
             "years": "1988-present",
-            "image_url": "https://i.pinimg.com/originals/68/34/91/683491680984319527.jpg"  # Nueva imagen de Pinterest
+            "image_url": "{{ url_for('static', filename='images/billy.jpg') }}"
         },
         {
             "name": "James Iha",
             "role": "Guitar",
             "years": "1988–2000, 2018–present",
-            "image_url": "https://i.pinimg.com/originals/53/63/50/536350636882119722.jpg"  # Nueva imagen de Pinterest
+            "image_url": "{{ url_for('static', filename='images/iha.jpg') }}"
         },
         {
             "name": "Jimmy Chamberlin",
             "role": "Drums",
             "years": "1988–1996, 1999–2009, 2015–present",
-            "image_url": "https://www.thedrummersjournal.com/wp-content/uploads/2021/02/Jimmy-Chamberlin-Interview-Featured-Image.jpg"  # Imagen del Drummer's Journal
+            "image_url": "{{ url_for('static', filename='images/jimmy.jpeg') }}"
         }
     ],
     "albums": [
         {
             "name": "Siamese Dream",
             "year": 1993,
-            "cover_url": "https://tierraadentro.fondodeculturaeconomica.com/wp-content/uploads/2023/07/Smashing-Pumpkins-Siamese-Dream-1993.jpg",  # Imagen del artículo
+            "cover_url": "{{ url_for('static', filename='images/album.jpg') }}",
             "highlights": ["Today", "Disarm", "Cherub Rock", "Mayonaise", "Rocket"]
         }
     ],
