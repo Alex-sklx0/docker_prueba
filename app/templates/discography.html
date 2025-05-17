@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ band.name }} | Discography</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Reutiliza los estilos del index.html */
+        :root {
+            --primary: #ff5555;
+            --secondary: #6a1b9a;
+            --dark: #121212;
+            --light: #e0e0e0;
+            --gray: #333;
+        }
+
+        body {
+            background-image: url('{{ band.background_image }}');
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* Estilos específicos para discography.html */
+        .album-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .album-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .album-info {
+            padding: 1rem;
+        }
+
+        .album-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .album-year {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .album-tracks {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .album-tracks li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: var(--light);
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid var(--primary);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--primary);
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid var(--primary);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--primary) transparent transparent;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: rgba(30, 30, 30, 0.8);
+            position: relative;
+            border-radius: 6px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 18px;
+            }
+
+            .left::before, .right::before {
+                border-width: 10px 10px 10px 0;
+                border-color: transparent var(--primary) transparent transparent;
+                left: 60px;
+            }
+
+            .left, .right {
+                left: 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">{{ band.name }}</div>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/discography" class="active"><i class="fas fa-compact-disc"></i> Discography</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="section-title">Discography</h1>
+
+        <section class="albums-section">
+            <h2 class="section-title">Studio Albums</h2>
+            <div class="albums-grid">
+                {% for album in band.albums %}
+                <div class="album-card">
+                    <img src="{{ album.cover_url }}" alt="{{ album.name }}">
+                    <div class="album-info">
+                        <h3>{{ album.name }}</h3>
+                        <p class="album-year">{{ album.year }}</p>
+                        <ul class="album-tracks">
+                            {% for track in album.highlights %}
+                            <li>{{ track }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <h2 class="section-title">Album Timeline</h2>
+            <div class="timeline">
+                {% for album in band.albums %}
+                <div class="timeline-item {% if loop.index % 2 == 1 %}left{% else %}right{% endif %}">
+                    <div class="timeline-content">
+                        <h3>{{ album.name }} ({{ album.year }})</h3>
+                        <img src="{{ album.cover_url }}" alt="{{ album.name }}" style="max-width: 150px; margin: 10px 0;">
+                        <p>Highlights: {{ album.highlights|join(', ') }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-spotify"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ band.name }} Fan Site | Not affiliated with the band</p>
+    </footer>
+</body>
+</html>
