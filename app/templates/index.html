@@ -22,13 +22,20 @@
     }
 
     body {
-        background-image: url('{{ band.background_image }}');
+        background-color: var(--dark);
         font-family: 'Montserrat', sans-serif;
         color: var(--light);
         line-height: 1.6;
+    }
+
+    /* Fondo con overlay oscuro */
+    .background-overlay {
+        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                    url('{{ band.background_image }}');
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
+        min-height: 100vh;
     }
 
     header {
@@ -47,7 +54,6 @@
     }
 
     .hero {
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
         height: 60vh;
         display: flex;
         flex-direction: column;
@@ -72,15 +78,17 @@
     }
 
     .card {
-        background: rgba(30, 30, 30, 0.8);
+        background: rgba(30, 30, 30, 0.9);
         padding: 1.5rem;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         transition: transform 0.3s;
+        border: 1px solid var(--gray);
     }
 
     .card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.5);
     }
 
     .facts-grid, .members-grid {
@@ -95,10 +103,16 @@
         height: 300px;
         object-fit: cover;
         border-radius: 8px 8px 0 0;
+        border-bottom: 1px solid var(--gray);
     }
 
     .member-info {
         padding: 1rem;
+    }
+
+    .member-info h3 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
     }
 
     .album-spotlight {
@@ -106,6 +120,9 @@
         align-items: center;
         gap: 2rem;
         margin-top: 2rem;
+        background: rgba(30, 30, 30, 0.9);
+        padding: 1.5rem;
+        border-radius: 8px;
     }
 
     .album-spotlight img {
@@ -116,10 +133,21 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
 
+    .track-list {
+        list-style: none;
+    }
+
+    .track-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--gray);
+    }
+
     footer {
         text-align: center;
         padding: 2rem;
         background-color: rgba(18, 18, 18, 0.9);
+        margin-top: 3rem;
+        border-top: 1px solid var(--gray);
     }
 
     @media (max-width: 768px) {
@@ -134,61 +162,63 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">{{ band.name }}</div>
-    </header>
+    <div class="background-overlay">
+        <header>
+            <div class="logo">{{ band.name }}</div>
+        </header>
 
-    <div class="hero">
-        <h1>{{ band.name }}</h1>
-        <p>Since {{ band.year_formed }} • {{ band.hometown }}</p>
-    </div>
+        <div class="hero">
+            <h1>{{ band.name }}</h1>
+            <p>Since {{ band.year_formed }} • {{ band.hometown }}</p>
+        </div>
 
-    <main class="container">
-        <section>
-            <h2><i class="fas fa-star"></i> Did You Know?</h2>
-            <div class="facts-grid">
-                {% for fact in band.fun_facts %}
-                <div class="card">
-                    <p>{{ fact }}</p>
+        <main class="container">
+            <section>
+                <h2><i class="fas fa-star"></i> Did You Know?</h2>
+                <div class="facts-grid">
+                    {% for fact in band.fun_facts %}
+                    <div class="card">
+                        <p>{{ fact }}</p>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <h2><i class="fas fa-fire"></i> Featured Album</h2>
-            <div class="album-spotlight">
-                <img src="{{ band.albums[0].cover_url }}" alt="{{ band.albums[0].name }}">
-                <div>
-                    <h3>{{ band.albums[0].name }} ({{ band.albums[0].year }})</h3>
-                    <ul>
-                        {% for track in band.albums[0].highlights %}
-                        <li>{{ track }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2><i class="fas fa-users"></i> Current Members</h2>
-            <div class="members-grid">
-                {% for member in band.current_members %}
-                <div class="card member-card">
-                    <img src="{{ member.image_url }}" alt="{{ member.name }}">
-                    <div class="member-info">
-                        <h3>{{ member.name }}</h3>
-                        <p>{{ member.role }}</p>
-                        <p><small>{{ member.years }}</small></p>
+            <section>
+                <h2><i class="fas fa-fire"></i> Featured Album</h2>
+                <div class="album-spotlight">
+                    <img src="{{ band.albums[0].cover_url }}" alt="{{ band.albums[0].name }}">
+                    <div>
+                        <h3>{{ band.albums[0].name }} ({{ band.albums[0].year }})</h3>
+                        <ul class="track-list">
+                            {% for track in band.albums[0].highlights %}
+                            <li>{{ track }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
-        </section>
-    </main>
+            </section>
 
-    <footer>
-        <p>© {{ current_year }} {{ band.name }} Fan Site</p>
-    </footer>
+            <section>
+                <h2><i class="fas fa-users"></i> Current Members</h2>
+                <div class="members-grid">
+                    {% for member in band.current_members %}
+                    <div class="card member-card">
+                        <img src="{{ member.image_url }}" alt="{{ member.name }}">
+                        <div class="member-info">
+                            <h3>{{ member.name }}</h3>
+                            <p>{{ member.role }}</p>
+                            <p><small>{{ member.years }}</small></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© {{ current_year }} {{ band.name }} Fan Site</p>
+        </footer>
+    </div>
 </body>
 </html>
